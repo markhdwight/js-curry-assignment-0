@@ -29,7 +29,7 @@ const cart =
 const itemRepeater =
   itemName =>
     count => {
-      // TODO
+      return Array(count).fill(itemName)
     }
 
 /**
@@ -40,6 +40,20 @@ const constructCarts =
   listings =>
     customers => {
       // TODO
+      return customers.reduce(
+        (prevReturned,currCustomer) => {
+          let myCust = currCustomer.name
+          let items = Object.keys(currCustomer.shoppingList).reduce(
+            (tempItems,currItem) => {
+              let itemName = currItem
+              let count = currCustomer.shoppingList[currItem]
+              return tempItems.concat(itemRepeater(itemName)(count))
+            },[]
+          )
+
+          return prevReturned.concat({'customer':myCust,'items':items})
+        },[]
+      )
     }
 
 module.exports = {
